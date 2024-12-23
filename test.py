@@ -7,16 +7,12 @@ data = [{"likes": 78, "name": "Joe", "views": 100000},
         {"likes": 35, "name": "Ary", "views": 2000}]
 
 for i in range(len(data)):
-#calledUrl = BASE + "video/1", {"likes": 10}
-    response = requests.put(BASE + "video/1" + str(i), data[i]) # (calledUrl, headers={"Content-Type": "application/json"}) #wanna send get request to the url
-#try:
+    response = requests.put(BASE + "video/1" + str(i), json=data[i], headers={"Content-Type": "application/json"}) # (calledUrl, headers={"Content-Type": "application/json"}) #wanna send get request to the url
     print(response.json())
+
+input()
 response = requests.delete(BASE + "video/0")
-print(response.json())
+print(response)
 input()
 response = requests.get(BASE + "video/6")
 print(response.json())
-
-
-#except requests.exceptions.JSONDecodeError:
-    #print("Response was not JSON, got:", response)

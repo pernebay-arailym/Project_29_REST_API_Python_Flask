@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Api, Resource
 
 app = Flask(__name__)
@@ -13,8 +13,9 @@ class Video(Resource):
     def get(self, video_id):
         return videos[video_id]
     def put(self, video_id):
+        print(request.form['likes'])
+        return {}
          
-
 
 #class HelloWorld(Resource): #created class with resource which will have a few different methods
     #def get(self, name):

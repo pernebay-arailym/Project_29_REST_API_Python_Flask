@@ -11,6 +11,8 @@ for i in range(len(data)):
     response = requests.put(BASE + "video/1" + str(i), data[i]) # (calledUrl, headers={"Content-Type": "application/json"}) #wanna send get request to the url
 #try:
     print(response.json())
+response = requests.delete(BASE + "video/0")
+print(response.json())
 input()
 response = requests.get(BASE + "video/6")
 print(response.json())

@@ -1,5 +1,5 @@
 from flask import Flask, request
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Api, Resource, reqparse, abort
 
 app = Flask(__name__)
 api = Api(app)
@@ -19,6 +19,7 @@ def abort_if_video_id_doesnot_exist(video_id):
 
 class Video(Resource):
     def get(self, video_id):
+        abort_if_video_id_doesnot_exist(video_id)
         return videos[video_id]
     
     def put(self, video_id):

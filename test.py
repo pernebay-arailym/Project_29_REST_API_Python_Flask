@@ -1,6 +1,15 @@
 import requests
 
 BASE = "http://127.0.0.1:5000/"
+calledUrl = BASE + "helloworld"
+response = requests.post(calledUrl, headers={"Content-Type": "application/json"}) #wanna send get request to the url
 
-response = requests.post(BASE + "helloworld") #wanna send get request to the url
-print(response.json())
+try:
+
+
+    print('whaaat ', response.json())
+
+
+
+except requests.exceptions.JSONDecodeError:
+    print("Response was not JSON, got:", response)

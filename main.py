@@ -6,7 +6,11 @@ api = Api(app)
 
 class HelloWorld(Resource): #created class with resource which will have a few different methods
     def get(self):
-        return {"Hello World"} # newt step we register this as a resource:
+        return {"data": "Hello World"} # newt step we register this as a resource, JSON Format used, LOOK IF IT IS JSON SERIARISABLE 
+    
+    def post(self):
+        print("POST request received!")  # Log the request
+        return {"data": "Posted"}
     
 api.add_resource(HelloWorld, "/helloworld") #added  name of the class
 

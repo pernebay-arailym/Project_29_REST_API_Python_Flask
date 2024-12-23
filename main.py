@@ -15,7 +15,7 @@ videos = {}
 
 def abort_if_video_id_doesnot_exist(video_id):
     if video_id not in videos:
-        abort("Video is is not valid...")
+        abort(404, message="Video is is not valid...")
 
 class Video(Resource):
     def get(self, video_id):

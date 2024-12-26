@@ -1,5 +1,5 @@
 from flask import Flask, request
-from flask_restful import Api, Resource, reqparse, abort
+from flask_restful import Api, Resource, reqparse, abort, fields, marshal_with
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -7,12 +7,20 @@ api = Api(app)
 #make a config -> where we save our database if in temp folder add ///tmp/:
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databse.db'
 db = SQLAlchemy(app)
-db.create_all()
 
 #create model to store videos:
 class VideoModel(db.Model): #defining fields of the model
-    id = db.column(db.Integer, primary_key=True) #pr.key means this is a unique identify)
+    id = db.Column(db.Integer, primary_key=True) #pr.key means this is a unique identify = id will be different for each video)
+    name = db.Column(db.String(100), nullable = False) #nullable means without names, all should have signs
+    views = db.Column(db.Integer, nullable= False)
+    likes = db.Column(db.Integer, nullable= False)
 
+    def __repr__(self):
+        return "Video(name = {name}, views = {views}, likes = {likes})"
+    
+#with app.app_context():
+#    db.create_all()
+    
 #names = {"ary": {"age": 24, "gender": "female"},
          #"bill": {"age": 27, "gender": "male"}}
 video_put_args = reqparse.RequestParser()
@@ -20,20 +28,23 @@ video_put_args.add_argument("name", type=str, help="Name of the video is require
 video_put_args.add_argument("views", type=int, help="Views of the video", required=True)
 video_put_args.add_argument("likes", type=int, help="Likes of the video", required=True)
 
-videos = {}
+resource_fields = {
+    'id': fields.String  #define what i want in this field
+}
+#videos = {}
 
-def abort_if_video_id_doesnot_exist(video_id):
-    if video_id not in videos:
-        abort(404, message="Video is is not valid...")
-
-def abort_if_video_exists(video_id):
-    if video_id in videos:
-        abort(409, message="Video already exists with that ID...")
+#def abort_if_video_id_doesnot_exist(video_id):
+#    if video_id not in videos:
+#        abort(404, message="Video is is not valid...")
+#
+#def abort_if_video_exists(video_id):
+#    if video_id in videos:
+#        abort(409, message="Video already exists with that ID...")
 
 class Video(Resource):
     def get(self, video_id):
-        abort_if_video_id_doesnot_exist(video_id)
-        return videos[video_id]
+        result = VideoModel.query.get(id=video_id)
+        return result
     
     def put(self, video_id):
        # print(request.form['likes'])

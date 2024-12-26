@@ -10,7 +10,8 @@ db = SQLAlchemy(app)
 db.create_all()
 
 #create model to store videos:
-class VideoModel(db.Model):
+class VideoModel(db.Model): #defining fields of the model
+    id = db.column(db.Integer, primary_key=True) #pr.key means this is a unique identify)
 
 #names = {"ary": {"age": 24, "gender": "female"},
          #"bill": {"age": 27, "gender": "male"}}

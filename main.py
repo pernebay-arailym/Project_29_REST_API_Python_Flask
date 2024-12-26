@@ -1,8 +1,12 @@
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse, abort
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 api = Api(app)
+#make a config -> where we save our database if in temp folder add ///tmp/:
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databse.db'
+db = SQLAlchemy(app)
 
 #names = {"ary": {"age": 24, "gender": "female"},
          #"bill": {"age": 27, "gender": "male"}}

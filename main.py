@@ -29,7 +29,10 @@ video_put_args.add_argument("views", type=int, help="Views of the video", requir
 video_put_args.add_argument("likes", type=int, help="Likes of the video", required=True)
 
 resource_fields = {
-    'id': fields.String  #define what i want in this field
+    'id': fields.Integer,
+    'name': fields.String,  #define what i want in this field
+    'views': fields.Integer,
+    'likes': fields.Integer
 }
 #videos = {}
 
@@ -42,16 +45,18 @@ resource_fields = {
 #        abort(409, message="Video already exists with that ID...")
 
 class Video(Resource):
+    @marshal_with(resource_fields)
     def get(self, video_id):
         result = VideoModel.query.get(id=video_id)
         return result
     
     def put(self, video_id):
        # print(request.form['likes'])
-        abort_if_video_exists(video_id)
         args = video_put_args.parse_args()
-        videos[video_id] = args
-        return videos[video_id], 201
+        video = VideoModel(id=video_id, name=args['name'], views=args['views'], likes=args['likes'])
+        db.session.add(video)
+        db.session.commit()
+        return video, 201
     
     def delete(self, video_id):
         abort_if_video_id_doesnot_exist(video_id)

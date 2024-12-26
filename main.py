@@ -7,6 +7,7 @@ api = Api(app)
 #make a config -> where we save our database if in temp folder add ///tmp/:
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databse.db'
 db = SQLAlchemy(app)
+db.create_all()
 
 #names = {"ary": {"age": 24, "gender": "female"},
          #"bill": {"age": 27, "gender": "male"}}

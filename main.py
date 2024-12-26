@@ -47,7 +47,7 @@ resource_fields = {
 class Video(Resource):
     @marshal_with(resource_fields)
     def get(self, video_id):
-        result = VideoModel.query.get(id=video_id)
+        result = VideoModel.query.filter_by(id=video_id).first()
         return result
     
     def put(self, video_id):

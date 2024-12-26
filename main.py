@@ -9,6 +9,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databse.db'
 db = SQLAlchemy(app)
 db.create_all()
 
+#create model to store videos:
+class VideoModel(db.Model):
+
 #names = {"ary": {"age": 24, "gender": "female"},
          #"bill": {"age": 27, "gender": "male"}}
 video_put_args = reqparse.RequestParser()
